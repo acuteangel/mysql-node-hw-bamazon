@@ -34,7 +34,7 @@ function displayProduct(){
             } 
             
         }
-        purchaseProduct(choices);
+        purchaseProduct(res.length);
     });
 }
 
@@ -44,10 +44,10 @@ function displayProduct(){
             type: "input",
             message: "Please give the ID of the product you would like to buy",
             validate: function(input){
-               if (parseInt(input) <= choices.length && parseInt(input) > 0){
+               if (parseInt(input) <= arr && parseInt(input) > 0){
                    return true;
                }
-               console.log("\nPlease input a number from 1 to "+choices.length)
+               console.log("\nPlease input a number from 1 to "+arr)
                return false;
             },
             name: "ID"
@@ -75,7 +75,9 @@ function displayProduct(){
                         item_id: response.ID
                       }
                     ],
-                    function() {                        
+                    function(err, resp) {                        
+                        if (err) console.log(err)
+                        if (resp) console.log(resp)
                         console.log("Your purchase cost $"+(purchased * res[0].price));
                     })
             }
