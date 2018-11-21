@@ -78,7 +78,7 @@ function addToInv(){
         inquirer.prompt([
             {
                 type: "input",
-                message: "Please give the ID of the product you would like to buy",
+                message: "Please give the ID of the product you would like to add to",
                 validate: function(input){
                    if (parseInt(input) <= res.length && parseInt(input) > 0){
                        return true;

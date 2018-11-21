@@ -62,6 +62,8 @@ function displayProduct(){
             if (err) throw err;
             var purchased = parseInt(response.quantity);
             var stock = res[0].stock_quantity;
+            var department = res[0].department_name
+            var cost = purchased*res[0].price
             if (purchased > stock){
                 console.log("We do not have that many available for purchase.")
             } else {
@@ -77,8 +79,18 @@ function displayProduct(){
                     ],
                     function(err, resp) {                        
                         if (err) console.log(err)
-                        if (resp) console.log(resp)
-                        console.log("Your purchase cost $"+(purchased * res[0].price));
+                        console.log("Your purchase cost $"+ cost);
+                    })
+                connection.query(
+                    "UPDATE departments SET product_sales = product_sales + "+cost+" WHERE ?",
+                    [
+                        {
+                        department_name: department
+                        }
+                    ],
+                    function(err, resp) {                        
+                        if (err) console.log(err)
+                        console.log("Transaction complete!");
                     })
             }
             connection.end();
